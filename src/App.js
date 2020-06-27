@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+class App extends Component {
+  constructor() {
+    super()
+    this.state= {
+      loading: false,
+      character: {}
+    }
+  }
+  componentDidMount(){
+    this.setState({loading: true})
+    fetch("https://cors-anywhere.herokuapp.com/https://superheroapi.com/api/10158458888921972/566")
+    .then(response => response.json())
+      .then(data => { 
+        this.setState({
+          loading: false,
+          character: data
+
+        })
+      })
+      
+    
+  }
+  render (){
+    const text = this.state.loading ? "loading..." : this.state.character.name
+
+    return(
+      <div>
+        <p>{text}</p>
     </div>
-  );
+    )
+  }
 }
-
-export default App;
+export default App
